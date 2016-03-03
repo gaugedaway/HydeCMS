@@ -1,27 +1,10 @@
-/*
-  Copyright 2016 Adam Bac
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
-
-  Module for communicating with GitHub.
-*/
-
 angular.module('Github', [])
   .service('githubProvider', ['$http', function($http) {
     var apiUrl = 'https://api.github.com';
     var authUserUrl = apiUrl + '/user';
     var repoUrl = (owner, repo) => apiUrl + '/repos/' + owner + '/' + repo;
     var contentsUrl = (owner, repo, path) => repoUrl(owner, repo) + '/contents/' + path;
+
 
     function getObject(url, token, callback) {
       $http({
@@ -35,6 +18,7 @@ angular.module('Github', [])
       });
     }
 
+
     function postObject(url, token, data, callback) {
       $http({
         'method': 'POST',
@@ -47,6 +31,7 @@ angular.module('Github', [])
         callback(null);
       });
     }
+
 
     function putObject(url, token, data, callback) {
       $http({
@@ -74,7 +59,6 @@ angular.module('Github', [])
         callback(null);
       });
     }
-
 
 
     function deleteObject(url, token, data, callback) {
@@ -154,6 +138,36 @@ angular.module('Github', [])
            }, function(r) {});
          }
       });
+    };
+
+
+    this.listRepos = function(token, callback) {
+      getObject(apiUrl + '/user/repos', token, callback);
+    };
+
+
+    this.getRepo = function(token, owner, repo, callback) {
+      getObject(repoUrl(owner, repo), token, callback);
+    };
+
+
+    this.createRepo = function(token, options) {
+      postObject(apiUrl + '/user/repos', token, options, function(r) {});
+    };
+
+
+    this.editRepo = function(token, owner, repo, options) {
+      patchObject(repoUrl(owner, repo), token, options, function(r) {});
+    };
+
+
+    this.deleteRepo = function(token, owner, repo) {
+      deleteObject(repoUrl(owner, repo), token, {}, function(r) {});
+    };
+
+
+    this.getUser = function(token, callback) {
+      getObject(authUserUrl, token, callback);
     };
 
   }]);
