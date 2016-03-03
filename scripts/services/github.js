@@ -4,8 +4,8 @@ angular.module('Github', [])
     var authUserUrl = apiUrl + '/user';
     var repoUrl = (owner, repo) => apiUrl + '/repos/' + owner + '/' + repo;
     var contentsUrl = (owner, repo, path) => repoUrl(owner, repo) + '/contents/' + path;
-
-
+    
+    
     function getObject(url, token, callback) {
       $http({
         'method': 'GET',
@@ -74,7 +74,7 @@ angular.module('Github', [])
       });
     }
 
-
+    
     function getFileSha(token, owner, repo, path, callback) {
       getObject(contentsUrl(owner, repo, path), token, function(response) {
          if(response && response.type == 'file') callback(response.sha);
@@ -107,12 +107,16 @@ angular.module('Github', [])
       getObject(contentsUrl(owner, repo, path), token, callback);
     };
 
-
+    
     this.saveFile = function (token, owner, repo, path, content, message, encoding='utf-8') {
       if(encoding == 'utf-8') content = btoa(content);
 
       getFileSha(token, owner, repo, path, function(sha) {
+        // Note: if file doesn't exist, getFileSha returns null.
+        // This way we can check whether the file exeist,
+        // at the same time getting its sha.
         if(sha) {
+          // File exist - update it.
           putObject(contentsUrl(owner, repo, path), token, {
             'message': message,
             'content': content,
@@ -120,6 +124,7 @@ angular.module('Github', [])
           }, function(r) {});
         }
         else {
+          // File doesn't exist - create one.
           putObject(contentsUrl(owner, repo, path), token, {
             'message': message,
             'content': content
