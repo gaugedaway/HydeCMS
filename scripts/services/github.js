@@ -5,7 +5,6 @@ angular.module('Github', [])
     var repoUrl = (owner, repo) => apiUrl + '/repos/' + owner + '/' + repo;
     var contentsUrl = (owner, repo, path) => repoUrl(owner, repo) + '/contents/' + path;
     
-    
     function getObject(url, token, callback) {
       $http({
         'method': 'GET',
