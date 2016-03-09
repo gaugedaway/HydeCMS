@@ -4,7 +4,7 @@
   Author: Adam Bac
 */
 
-angular.module('Hyde.Services.OAuth', ['Hyde.Config'])
+angular.module('Hyde.Common.Services.OAuth', ['Hyde.Core.Config'])
   .service('oauthProvider', [
     '$http',
     '$location',
@@ -56,7 +56,7 @@ angular.module('Hyde.Services.OAuth', ['Hyde.Config'])
         });
       }
     }
-    
+
 
     this.getToken = function(callback) {
       if($rootScope.oauthToken) callback($rootScope.oauthToken);

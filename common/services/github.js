@@ -1,10 +1,15 @@
-angular.module('Github', [])
-  .service('githubProvider', ['$http', function($http) {
+angular.module('Hyde.Common.Services.Github', ['Hyde.Common.Services.OAuth'])
+  .service('githubProvider', [
+    '$http',
+    'oauthProvider',
+
+    function($http, oauth) {
+
     var apiUrl = 'https://api.github.com';
     var authUserUrl = apiUrl + '/user';
     var repoUrl = (owner, repo) => apiUrl + '/repos/' + owner + '/' + repo;
     var contentsUrl = (owner, repo, path) => repoUrl(owner, repo) + '/contents/' + path;
-    
+
     function getObject(url, token, callback) {
       $http({
         'method': 'GET',
@@ -73,7 +78,7 @@ angular.module('Github', [])
       });
     }
 
-    
+
     function getFileSha(token, owner, repo, path, callback) {
       getObject(contentsUrl(owner, repo, path), token, function(response) {
          if(response && response.type == 'file') callback(response.sha);
@@ -106,7 +111,7 @@ angular.module('Github', [])
       getObject(contentsUrl(owner, repo, path), token, callback);
     };
 
-    
+
     this.saveFile = function (token, owner, repo, path, content, message, encoding='utf-8') {
       if(encoding == 'utf-8') content = btoa(content);
 
