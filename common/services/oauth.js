@@ -4,27 +4,18 @@
   Author: Adam Bac
 */
 
-angular.module('OAuth', [])
-  .service('oauthProvider', ['$http', '$location', '$window', '$rootScope', function($http, $location, $window, $rootScope) {
+angular.module('Hyde.Services.OAuth', ['Hyde.Config'])
+  .service('oauthProvider', [
+    '$http',
+    '$location',
+    '$window',
+    '$rootScope',
+    'githubApiUrl',
+    'oauthClientId',
+    'gatekeeperUrl',
+    'githubScope',
 
-  // Configuration; some valued are ereased for security,
-  // if you want to experiment wit this code you must configure your
-  // own Gatekeeper server (https://github.com/prose/gatekeeper)
-  // and register your own GitHub app.
-
-  // Gatekeeper address (not <host>, but <host>/authenticate/,
-  // for example http://127.0.0.1/authenticate/
-  // (ending slash is also important)).
-  var gate_url = '';
-
-  // Client id of your app:
-  var client_id = '';
-
-  // github OAuth URL
-  var github_url = 'https://github.com/login/oauth/authorize';
-
-  // list of scopes
-  var scopes = ['public_repo'];
+    function($http, $location, $window, $rootScope, githubUrl, clientId, gatekeeperUrl, scope) {
 
   // Function used to redirect in case the code written in url
   // doesn't work, i.e. when user reloaded the page;
@@ -42,7 +33,7 @@ angular.module('OAuth', [])
 
     // If not, redirect to github authentication page.
     if(!code){
-      $window.location.href = github_url + '?client_id=' + client_id + '&redirect_uri=' + window.encodeURIComponent($location.absUrl()) + '&scope=' + scopes.join(',');
+      $window.location.href = githubUrl + '?client_id=' + clientId + '&redirect_uri=' + window.encodeURIComponent($location.absUrl()) + '&scope=' + scope.join(',');
     }
 
     // If yes, get the code...
@@ -53,7 +44,7 @@ angular.module('OAuth', [])
       // http://abc.com/?code=ajffjuhgffjhfjaj#login, so we need to separate
       // the code from the path after #.
       code = code[1].split('#')[0];
-      $http.get(gate_url + code).then(function(response) {
+      $http.get(gatekeeperUrl + code).then(function(response) {
         if(response.data && response.data.hasOwnProperty('token')) callback(response.data.token);
         // If the response is incorrect, try to redirect.
         else redirect();
