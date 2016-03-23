@@ -1,9 +1,14 @@
 import React from 'react'
 
-export default function NavBar({ onChange, pages }) {
+import NavButton from './NavButton.jsx'
+
+
+export default function NavBar() {
   return (
     <div>
-      { pages.map(page => <button key={ page.id } onClick={ e => onChange(page.id) }>{ page.name }</button>) }
+      <NavButton title="Page 1" page="main" />
+      <NavButton title="Page 2" page="second" />
+      <NavButton title="Page 3" page="third" />
     </div>
   )
 }

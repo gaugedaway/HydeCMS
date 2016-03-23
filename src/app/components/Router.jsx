@@ -1,7 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
-export default function Router({ pageId }) {
-  switch(pageId) {
+
+
+function Router({ page }) {
+  switch(page) {
     case 'main':
       return <h1>This is the main page's content</h1>
       
@@ -12,3 +15,13 @@ export default function Router({ pageId }) {
       return <h1>Error: page not found!</h1>
   }
 }
+
+
+
+function mapStateToProps(state) {
+  return {
+    page: state.currentPage,
+  }
+}
+
+export default connect(mapStateToProps)(Router)

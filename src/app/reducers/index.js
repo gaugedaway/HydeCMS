@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
 
-import pagesReducer from './pages.js'
 import pageReducer from './currentPage.js'
+import navBarVisibilityReducer from './navBarVisibility.js'
 
 const mainReducer = combineReducers({
-  pages: pagesReducer,
-  currentPage: pageReducer
+  currentPage: pageReducer,
+  navBarVisibility: navBarVisibilityReducer
 })
 
 export default mainReducer

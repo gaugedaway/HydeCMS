@@ -11,12 +11,8 @@ import App from './components/App.jsx'
 
 
 let initialState = {
-  pages: [
-    { name: 'Main Page', id: 'main' },
-    { name: 'Second Page', id: 'second' },
-    { name: 'Wrong page', id: 'third' }
-  ],
-  currentPage: 'main'
+  currentPage: 'main',
+  navBarVisibility: true
 }
 
 let logger = createLogger()
