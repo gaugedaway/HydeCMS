@@ -16,7 +16,7 @@ let initialState = {
     { name: 'Second Page', id: 'second' },
     { name: 'Wrong page', id: 'third' }
   ],
-  page: 'main'
+  currentPage: 'main'
 }
 
 let logger = createLogger()

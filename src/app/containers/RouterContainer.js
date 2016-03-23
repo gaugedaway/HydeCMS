@@ -4,7 +4,7 @@ import Router from '../components/Router.jsx'
 
 function mapStateToProps(state) {
   return {
-    pageId: state.page
+    pageId: state.currentPage
   }
 }
 

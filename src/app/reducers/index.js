@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
 
 import pagesReducer from './pages.js'
-import pageReducer from './page.js'
+import pageReducer from './currentPage.js'
 
 const mainReducer = combineReducers({
   pages: pagesReducer,
-  page: pageReducer
+  currentPage: pageReducer
 })
 
 export default mainReducer
