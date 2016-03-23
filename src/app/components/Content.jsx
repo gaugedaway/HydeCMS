@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 
 
-function Router({ page }) {
+function Content({ page }) {
   switch(page) {
     case 'main':
       return <h1>This is the main page's content</h1>
@@ -24,4 +24,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(Router)
+export default connect(mapStateToProps)(Content)

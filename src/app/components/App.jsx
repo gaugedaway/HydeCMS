@@ -2,17 +2,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import NavBar from './NavBar.jsx'
-import Router from './Router.jsx'
+import Content from './Content.jsx'
 
 
 
 export default function App({ navBarVisibility }) {
-  if(!navBarVisibility) return <Router />
+  if(!navBarVisibility) return <Content />
   
   return (
     <div>
       <NavBar />
-      <Router />
+      <Content />
     </div>
   )
 }
