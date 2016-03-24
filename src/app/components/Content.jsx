@@ -1,6 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
-
 
 
 function Content({ page }) {
@@ -15,13 +13,3 @@ function Content({ page }) {
       return <h1>Error: page not found!</h1>
   }
 }
-
-
-
-function mapStateToProps(state) {
-  return {
-    page: state.currentPage,
-  }
-}
-
-export default connect(mapStateToProps)(Content)
