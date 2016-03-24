@@ -1,8 +1,8 @@
-import * as RouterActions from '../actions/router.js'
+import * as PagesActions from '../actions/pages.js'
 
 export default function currentPageReducer(currentPage = '', action) {
   switch (action.type) {
-    case RouterActions.CHANGE_PAGE:
+    case PagesActions.CHANGE_PAGE:
       return action.page
     
     default:
