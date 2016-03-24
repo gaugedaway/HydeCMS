@@ -1,6 +1,6 @@
 import React from 'react'
 
-import ChangePageNavButton from '../containers/ChangePageNavButton.jsx'
+import ChangePageNavButton from '../containers/ChangePageNavButton.js'
 
 
 export default function NavBar() {

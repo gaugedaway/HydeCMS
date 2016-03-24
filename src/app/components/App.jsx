@@ -5,24 +5,14 @@ import NavBar from './NavBar.jsx'
 import Content from './Content.jsx'
 
 
-
-export default function App({ navBarVisibility }) {
-  if(!navBarVisibility) return <Content />
+export default function App({ navBarVisibility, currentPage }) {
+  let navbar = <div />
+  if(navBarVisibility) navbar = <NavBar />
   
   return (
     <div>
-      <NavBar />
-      <Content />
+      { navbar }
+      <Content page={ currentPage } />
     </div>
   )
 }
-
-
-
-function mapStateToProps(state) {
-  return {
-    navBarVisibility: state.navBarVisibility
-  }
-}
-
-export default connect(mapStateToProps)(App)

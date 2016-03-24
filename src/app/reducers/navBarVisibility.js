@@ -1,4 +1,4 @@
-import * as NavBarActions from '../actions/navbar'
+import * as NavBarActions from '../actions/navbar.js'
 
 export default function navBarVisibilityReducer(visible = false, action) {
   switch(action.type) {

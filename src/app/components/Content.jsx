@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-function Content({ page }) {
+export default function Content({ page }) {
   switch(page) {
     case 'main':
       return <h1>This is the main page's content</h1>

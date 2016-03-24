@@ -5,9 +5,7 @@ import { createStore, applyMiddleware } from 'redux'
 import createLogger from 'redux-logger'
 
 import mainReducer from './reducers/index.js'
-
-import App from './components/App.jsx'
-
+import AppContainer from './containers/AppContainer.js'
 
 
 let initialState = {
@@ -20,7 +18,7 @@ let store = createStore(mainReducer, initialState, applyMiddleware(logger))
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <AppContainer />
   </Provider>,
   document.getElementById('content')
 )
