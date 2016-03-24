@@ -21705,14 +21705,14 @@
 	      return _react2.default.createElement(
 	        'h1',
 	        null,
-	        'This is the main page\'s content'
+	        'This is the main page content'
 	      );
 
 	    case 'second':
 	      return _react2.default.createElement(
 	        'h1',
 	        null,
-	        'This is the second page\'s content'
+	        'This is the second page content'
 	      );
 
 	    default:
