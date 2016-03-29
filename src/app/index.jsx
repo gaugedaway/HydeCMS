@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route, IndexRoute, hashHistory } from 'react-router'
+import { Router, Route, IndexRoute, useRouterHistory } from 'react-router'
 import { syncHistoryWithStore, routerMiddleware, replace } from 'react-router-redux'
+import { createHashHistory } from 'history'
 import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from 'redux'
 import createLogger from 'redux-logger'
@@ -22,9 +23,10 @@ const initialState = {
   }
 }
 
+const appHistory = useRouterHistory(createHashHistory)({ queryKey: false })
 const logger = createLogger()
-const store = createStore(mainReducer, initialState, applyMiddleware(logger, thunk, routerMiddleware(hashHistory)))
-const history = syncHistoryWithStore(hashHistory, store)
+const store = createStore(mainReducer, initialState, applyMiddleware(logger, thunk, routerMiddleware(appHistory)))
+const history = syncHistoryWithStore(appHistory, store)
 
 let savedToken = JSON.parse(localStorage[LOCAL_STORAGE_TOKEN_KEY])
 if(savedToken) {
