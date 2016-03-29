@@ -15,8 +15,19 @@ export default class Login extends React.Component {
     window.location.href = authUrl
   }
   
+  cleanUrl() {
+    var clean_url = location.protocol + "//" + location.host + location.pathname
+    var hash_pos = location.href.indexOf("#")
+    if (hash_pos > 0) {
+      var hash = location.href.substring(hash_pos, location.href.length);
+      clean_url += hash;
+    }
+    window.history.replaceState({}, document.title, clean_url);
+  }
+  
   componentDidMount() {
     let code = this.getCode()
+    this.cleanUrl()
     if(code) this.props.fetchToken(code)
   }
   
