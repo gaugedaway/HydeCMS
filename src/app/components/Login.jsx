@@ -10,6 +10,11 @@ export default class Login extends React.Component {
     return code[1].split('#')[0]
   }
   
+  redirect() {
+    const authUrl = `${ Config.OAUTH_URL }?client_id=${ Config.CLIENT_ID }&redirect_uri=${ Config.REDIRECT_URI }&scope=${ Config.SCOPE.join(',') }`
+    window.location.href = authUrl
+  }
+  
   componentDidMount() {
     let code = this.getCode()
     if(code) this.props.fetchToken(code)
@@ -20,11 +25,10 @@ export default class Login extends React.Component {
   }
    
   render() {
-    const authUrl = `${ Config.OAUTH_URL }?client_id=${ Config.CLIENT_ID }&redirect_uri=${ Config.REDIRECT_URI }&scope=${ Config.SCOPE.join(',') }`
     return (
       <div>
         <h1>Login</h1>
-        <a href={ authUrl }>Authorize</a>
+        <button onClick={ this.redirect }>Authorize</button>
         {
           this.props.error
             ? <p style={{ color: 'red' }}>An error occured while connencting to your GitHub account. Try logging in again.</p>
