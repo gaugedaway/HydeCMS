@@ -5,7 +5,8 @@ import {
   REQUEST_TOKEN,
   REQUEST_TOKEN_SUCCESS,
   REQUEST_TOKEN_ERROR,
-  REQUEST_TOKEN_CANCEL
+  REQUEST_TOKEN_CANCEL,
+  RESET_TOKEN
 } from '../actions/token.js'
 
 function tokenReducer(token = { value: null, requested: false, error: null }, action) {
@@ -37,6 +38,14 @@ function tokenReducer(token = { value: null, requested: false, error: null }, ac
         requested: false,
         error: token.error
       }
+      
+    case RESET_TOKEN:
+      return {
+        value: null,
+        requested: false,
+        error: null
+      }
+    
     
     
     default:
