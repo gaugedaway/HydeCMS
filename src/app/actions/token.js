@@ -1,4 +1,4 @@
-import { replace } from 'react-router-redux'
+import { push } from 'react-router-redux'
 
 import { GATEKEEPER_URL, LOCAL_STORAGE_TOKEN_KEY } from '../config.js'
 import { fetchJSON } from '../ajax.js'
@@ -48,7 +48,7 @@ export function fetchToken(code) {
         if(getState().token.requested) {
           localStorage[LOCAL_STORAGE_TOKEN_KEY] = JSON.stringify(token)
           dispatch(requestTokenSuccess(token))
-          dispatch(replace('/'))
+          dispatch(push('/'))
         }
       })
       .catch((error) => {
