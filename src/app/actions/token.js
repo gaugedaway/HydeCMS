@@ -7,6 +7,7 @@ export const REQUEST_TOKEN = 'REQUEST_TOKEN'
 export const REQUEST_TOKEN_SUCCESS = 'REQUEST_TOKEN_SUCCESS'
 export const REQUEST_TOKEN_ERROR = 'REQUEST_TOKEN_ERROR'
 export const REQUEST_TOKEN_CANCEL = 'REQUEST_TOKEN_CANCEL'
+export const RESET_TOKEN = 'RESET_TOKEN'
 
 export function requestToken() {
   return {
@@ -34,6 +35,12 @@ export function requestTokenCancel() {
   }
 }
 
+export function resetToken() {
+  return {
+    type: RESET_TOKEN
+  }
+}
+
 export function fetchToken(code) {
   return (dispatch, getState) => {
     dispatch(requestToken())
@@ -54,5 +61,13 @@ export function fetchToken(code) {
       .catch((error) => {
         if(getState().token.requested) dispatch(requestTokenError(error))
       })
+  }
+}
+
+export function logout() {
+  return (dispatch) => {
+    localStorage[LOCAL_STORAGE_TOKEN_KEY] = JSON.stringify(null)
+    dispatch(resetToken())
+    dispatch(push({ pathname: '/login' }))
   }
 }
