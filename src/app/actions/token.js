@@ -45,7 +45,7 @@ export function fetchToken(code) {
   return (dispatch, getState) => {
     dispatch(requestToken())
     
-    fetchJSON(GATEKEEPER_URL + code)
+    return fetchJSON(GATEKEEPER_URL + code)
       .then((data) => {
         if(data.error) throw new Error(data.error)
         if(!data.token) throw new Error('No token in response from server')
@@ -53,21 +53,12 @@ export function fetchToken(code) {
       })
       .then((token) => {
         if(getState().token.requested) {
-          localStorage[LOCAL_STORAGE_TOKEN_KEY] = JSON.stringify(token)
           dispatch(requestTokenSuccess(token))
-          dispatch(push('/'))
         }
+        return token
       })
       .catch((error) => {
         if(getState().token.requested) dispatch(requestTokenError(error))
       })
-  }
-}
-
-export function logout() {
-  return (dispatch) => {
-    localStorage[LOCAL_STORAGE_TOKEN_KEY] = JSON.stringify(null)
-    dispatch(resetToken())
-    dispatch(push({ pathname: '/login' }))
   }
 }

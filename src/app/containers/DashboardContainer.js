@@ -1,7 +1,10 @@
+import { push } from 'react-router-redux'
 import { connect } from 'react-redux'
 
-import { logout } from '../actions/token.js'
+import { LOCAL_STORAGE_TOKEN_KEY } from '../config.js'
+import { resetToken } from '../actions/token.js'
 import Dashboard from '../components/Dashboard.jsx'
+
 
 function mapStateToProps(state, ownProps) {
   return {
@@ -11,7 +14,11 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch, ownProps) {
   return {
-    logout: () => dispatch(logout())
+    logout: () => {
+      dispatch(resetToken())
+      localStorage[LOCAL_STORAGE_TOKEN_KEY] = JSON.stringify(null)
+      dispatch(push({ pathname: '/login' }))
+    }
   }
 }
 
