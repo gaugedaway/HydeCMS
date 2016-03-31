@@ -12,7 +12,7 @@ class LogoutButton extends React.Component {
   logout() {
     localStorage[LOCAL_STORAGE_TOKEN_KEY] = JSON.stringify(null)
     this.props.resetToken()
-    this.props.push({ pathname: '/logout' })
+    this.props.push({ pathname: '/login' })
   }
   
   render() {

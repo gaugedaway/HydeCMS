@@ -1,16 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import { OAUTH_URL, REDIRECT_URI, CLIENT_ID, SCOPE } from '../config.js'
 
-export default class Login extends React.Component {
-  componentDidMount() {
-    this.props.authorize()
-  }
-  
-  componentWillUnmount() {
-    this.props.authorizeCancel()
-  }
-  
+class Login extends React.Component {
   redirectToGithubAuth() {
     window.location.href = `${ OAUTH_URL }?redirect_uri=${ REDIRECT_URI }&client_id=${ CLIENT_ID }&scope=${ SCOPE.join(',') }`
   }
@@ -34,3 +27,13 @@ export default class Login extends React.Component {
     )
   }
 }
+
+
+function mapStateToProps(state, ownProps) {
+  return {
+    requested: state.token.requested,
+    error: state.token.error
+  }
+}
+
+export default connect(mapStateToProps)(Login)

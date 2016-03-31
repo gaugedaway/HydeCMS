@@ -10,9 +10,9 @@ import thunk from 'redux-thunk'
 
 import { LOCAL_STORAGE_TOKEN_KEY } from './config.js'
 import mainReducer from './reducers/index.js'
-import AppContainer from './containers/AppContainer.js'
-import DashboardContainer from './containers/DashboardContainer.js'
-import LoginContainer from './containers/LoginContainer.js'
+import App from './components/App.jsx'
+import Dashboard from './components/Dashboard.jsx'
+import Login from './components/Login.jsx'
 
 const initialState = {
   token: {
@@ -30,9 +30,9 @@ const history = syncHistoryWithStore(appHistory, store)
 ReactDOM.render(
   <Provider store={ store }>
     <Router history={ history }>
-      <Route path="/" component={ AppContainer }>
-        <IndexRoute component={ DashboardContainer } />
-        <Route path="login" component={ LoginContainer } />
+      <Route path="/" component={ App }>
+        <IndexRoute component={ Dashboard } />
+        <Route path="login" component={ Login } />
       </Route>
     </Router>
   </Provider>,
