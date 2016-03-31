@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch'
 
+import { GATEKEEPER_URL } from './config.js'
+
 export function fetchJSON(url, options) {
   return fetch(url, options)
     .then(response => {
@@ -19,4 +21,13 @@ export function fetchGithub(url, method, token, data = null) {
   let options = { method, headers: { Authorization: 'token ' + token } }
   if(data) options.body = data
   return fetchJSON('https://api.github.com' + url, options)
+}
+
+export function fetchToken(code) {
+  return fetchJSON(GATEKEEPER_URL + code)
+    .then((data) => {
+      if(data.error) throw new Error(data.error)
+      if(!data.token) throw new Error('No token in response from server')
+      return data.token
+    })
 }

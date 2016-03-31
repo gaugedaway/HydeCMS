@@ -1,8 +1,3 @@
-import { push } from 'react-router-redux'
-
-import { GATEKEEPER_URL, LOCAL_STORAGE_TOKEN_KEY } from '../config.js'
-import { fetchJSON } from '../ajax.js'
-
 export const REQUEST_TOKEN = 'REQUEST_TOKEN'
 export const REQUEST_TOKEN_SUCCESS = 'REQUEST_TOKEN_SUCCESS'
 export const REQUEST_TOKEN_ERROR = 'REQUEST_TOKEN_ERROR'
@@ -38,27 +33,5 @@ export function requestTokenCancel() {
 export function resetToken() {
   return {
     type: RESET_TOKEN
-  }
-}
-
-export function fetchToken(code) {
-  return (dispatch, getState) => {
-    dispatch(requestToken())
-    
-    return fetchJSON(GATEKEEPER_URL + code)
-      .then((data) => {
-        if(data.error) throw new Error(data.error)
-        if(!data.token) throw new Error('No token in response from server')
-        return data.token
-      })
-      .then((token) => {
-        if(getState().token.requested) {
-          dispatch(requestTokenSuccess(token))
-        }
-        return token
-      })
-      .catch((error) => {
-        if(getState().token.requested) dispatch(requestTokenError(error))
-      })
   }
 }
