@@ -31,3 +31,12 @@ export function fetchToken(code) {
       return data.token
     })
 }
+
+export function fetchLogin(token) {
+  return fetchGithub('/user', 'GET', token)
+    .then((data) => data.login)
+}
+
+export function fetchPosts(token, login, repo) {
+  return fetchGithub(`/repos/${ login }/${ repo }/contents/`, 'GET', token)
+}

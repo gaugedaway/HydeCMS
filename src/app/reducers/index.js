@@ -1,11 +1,10 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 
-import tokenReducer from './tokenReducer.js'
-
+import account from './account.js'
 
 const mainReducer = combineReducers({
-  token: tokenReducer,
+  account,
   routing: routerReducer
 })
 

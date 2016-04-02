@@ -1,14 +1,25 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import LogoutButton from './LogoutButton.jsx'
 
-export default class Dashboard extends React.Component {
+class Dashboard extends React.Component {
+  
   render() {
     return (
       <div>
-        <h1>You have successfully logged in!</h1>
+        <h1>Hello!</h1>
         <LogoutButton />
       </div>
     )
   }
 }
+
+function mapStateToProps(state) {
+  return {
+    token: state.account.token,
+    login: state.account.login
+  }
+}
+
+export default connect(mapStateToProps)(Dashboard)

@@ -8,23 +8,14 @@ import { createStore, applyMiddleware } from 'redux'
 import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 
-import { LOCAL_STORAGE_TOKEN_KEY } from './config.js'
 import mainReducer from './reducers/index.js'
 import App from './components/App.jsx'
 import Dashboard from './components/Dashboard.jsx'
 import Login from './components/Login.jsx'
 
-const initialState = {
-  token: {
-    value: null,
-    requested: false,
-    error: null
-  }
-}
-
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false })
 const logger = createLogger()
-const store = createStore(mainReducer, initialState, applyMiddleware(logger, thunk, routerMiddleware(appHistory)))
+const store = createStore(mainReducer, applyMiddleware(logger, thunk, routerMiddleware(appHistory)))
 const history = syncHistoryWithStore(appHistory, store)
 
 ReactDOM.render(
