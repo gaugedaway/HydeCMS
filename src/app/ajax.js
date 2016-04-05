@@ -37,6 +37,6 @@ export function fetchLogin(token) {
     .then((data) => data.login)
 }
 
-export function fetchPosts(token, login, repo) {
-  return fetchGithub(`/repos/${ login }/${ repo }/contents/`, 'GET', token)
+export function fetchFiles(path, token, login, repo) {
+  return fetchGithub(`/repos/${ login }/${ repo }/contents${ path }`, 'GET', token)
 }
