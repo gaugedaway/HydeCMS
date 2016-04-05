@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --colors --progress",
     "run": "webpack-dev-server --watch",
-    "test": "jest --verbose"
+    "test": "jest --verbose --coverage"
   },
   "repository": {
     "type": "git",
@@ -35,8 +35,7 @@
     "unmockedModulePathPatterns": [
       "<rootDir>/node_modules/react",
       "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/react-addons-test-utils",
-      "<rootDir>/node_modules/fbjs"
+      "<rootDir>/node_modules/react-addons-test-utils"
     ]
   },
   "devDependencies": {
