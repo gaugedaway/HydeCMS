@@ -41,20 +41,18 @@ export function logout() {
 }
 
 export function fetchAccount(code, redirect = null) {
-  return (dispatch, getState) => {
+  return async (dispatch, getState) => {
     dispatch(fetchAccountStart())
-    return fetchToken(code)
-      .then(token => {
-        return Promise.all([token, fetchLogin(token)])
-      })
-      .then(([token, login]) => {
-        if(getState().account.authorizing) {
-          dispatch(fetchAccountSuccess(token, login))
-          dispatch(push(redirect))
-        }
-      })
-      .catch(error => {
-        if(getState().account.authorizing) dispatch(fetchAccountError(error))
-      })
+    try {
+      let token = await fetchToken(code)
+      let login = await fetchLogin(token)
+      if (getState().account.authorizing) {
+        dispatch(fetchAccountSuccess(token, login))
+        dispatch(push(redirect))
+      }
+    }
+    catch(error) {
+      if(getState().account.authorizing) dispatch(fetchAccountError(error))
+    }
   }
 }
