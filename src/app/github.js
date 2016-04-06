@@ -2,10 +2,14 @@ import { fetchJSON } from './ajax.js'
 
 import { GATEKEEPER_URL } from './config.js'
 
-async function fetchFromApi(url, method, token, data = null) {
+async function fetchAuthorized(url, method, token, data = null) {
   let options = { method, headers: { Authorization: 'token ' + token } }
   if(data) options.body = data
-  return await fetchJSON('https://api.github.com' + url, options)
+  return await fetchJSON(url, options)
+}
+
+async function fetchFromApi(path, method, token, data = null) {
+  return await fetchAuthorized('https://api.github.com' + path, method, token, data)
 }
 
 export async function getToken(code) {
@@ -31,7 +35,7 @@ export async function getDir(path, token, login, repo) {
 }
 
 export async function getFileByUrl(url, token) {
-  let data = await fetchFromApi(url, 'GET', token)
+  let data = await fetchAuthorized(url, 'GET', token)
   if(!Array.isArray(data) && data.type && data.type === 'file') return data
   throw new Error(`getFileByUrl: ${ url } is not a file`)
 }

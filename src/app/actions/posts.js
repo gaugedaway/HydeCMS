@@ -1,5 +1,5 @@
 import * as Github from '../github.js'
-import { parsePostFilename } from '../parsingFunctions.js'
+import { parsePostFilename, parseFileFontMatter } from '../parsingFunctions.js'
 
 export const FETCH_POSTS_START = 'FETCH_POSTS_START'
 export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS'
@@ -45,10 +45,23 @@ export function fetchPosts() {
           sha: file.sha
         })
       })
-      dispatch(fetchPostsSuccess(filesList))
+
+      let fontMatters = filesList.map((file) => Github.getFileByUrl(file.url, token).then((data) => {
+        let content = Unibabel.base64ToUtf8(data.content)
+        try { return parseFileFontMatter(content) }
+        catch(e) { return {} }
+      }))
+
+      fontMatters = await Promise.all(fontMatters)
+
+      for(let i in filesList) {
+        Object.assign(filesList[i], filesList[i], fontMatters[i])
+      }
+
+      if(getState().posts.fetching) dispatch(fetchPostsSuccess(filesList))
     }
     catch(e) {
-      dispatch(fetchPostsError)
+      if(getState().posts.fetching) dispatch(fetchPostsError(e))
     }
   }
 }

@@ -11,6 +11,10 @@ class Dashboard extends React.Component {
     this.props.fetchPosts()
   }
 
+  componentWillUnmount() {
+    this.props.fetchPostsCancel()
+  }
+
   render() {
     return (
       <div>

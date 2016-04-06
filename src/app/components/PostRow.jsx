@@ -1,5 +1,9 @@
 import React from 'react'
 
 export default function PostRow({ post }) {
-  return <strong>{ post.title }</strong>
+  return (
+    <div>
+      <strong>{ post.title }</strong> - <em>{ post.date.toDateString() }</em>&nbsp;
+    </div>
+  )
 }
