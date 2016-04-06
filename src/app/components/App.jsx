@@ -8,11 +8,11 @@ import { replace } from 'react-router-redux'
 
 class App extends React.Component {
   componentDidMount() {
-    if(!this.props.account.token || !this.props.account.login) {
+    if(!this.props.token || !this.props.login) {
       this.props.replace({ pathname: '/login' })
     }
   }
-  
+
   render() {
     return <div>{ this.props.children }</div>
   }
@@ -21,9 +21,9 @@ class App extends React.Component {
 
 function mapStateToProps(state, ownProps) {
   return {
-    account: state.account,
+    token: state.account.token,
+    login: state.account.login,
     children: ownProps.children,
-    location: ownProps.location
   }
 }
 

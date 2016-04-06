@@ -17,6 +17,10 @@ class Login extends React.Component {
     window.history.replaceState({}, document.title, clean_uri)
   }
 
+  redirectToGithubAuth() {
+    window.location.href = `${ OAUTH_URL }?redirect_uri=${ REDIRECT_URI }&client_id=${ CLIENT_ID }&scope=${ SCOPE.join(',') }`
+  }
+
   componentDidMount() {
     const code = this.getCode()
     if(code) {
@@ -27,10 +31,6 @@ class Login extends React.Component {
 
   componentWillUnmount() {
     this.props.fetchAccountCancel()
-  }
-
-  redirectToGithubAuth() {
-    window.location.href = `${ OAUTH_URL }?redirect_uri=${ REDIRECT_URI }&client_id=${ CLIENT_ID }&scope=${ SCOPE.join(',') }`
   }
 
   render() {
