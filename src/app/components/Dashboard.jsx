@@ -1,14 +1,27 @@
 import React from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import * as PostsActions from '../actions/posts.js'
 
+import PostsList from './PostsList.jsx'
 import LogoutButton from './LogoutButton.jsx'
 
 class Dashboard extends React.Component {
-  
+  componentDidMount() {
+    this.props.fetchPosts()
+  }
+
   render() {
     return (
       <div>
-        <h1>Hello!</h1>
+        <h1>Posts:</h1>
+        {
+          this.props.posts.fetching ? <p>Wait...</p> : (
+            this.props.posts.error ? <p>Error!</p> : (
+              this.props.posts.elements ? <PostsList posts={ this.props.posts.elements } /> : null
+            )
+          )
+        }
         <LogoutButton />
       </div>
     )
@@ -17,9 +30,12 @@ class Dashboard extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    token: state.account.token,
-    login: state.account.login
+    posts: state.posts
   }
 }
 
-export default connect(mapStateToProps)(Dashboard)
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(PostsActions, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
