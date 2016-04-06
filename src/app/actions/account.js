@@ -1,6 +1,6 @@
 import { push } from 'react-router-redux'
 
-import { fetchToken, fetchLogin } from '../ajax.js'
+import { getToken, getLogin } from '../github.js'
 
 export const FETCH_ACCOUNT_START = 'FETCH_ACCOUNT_START'
 export const FETCH_ACCOUNT_SUCCESS = 'FETCH_ACCOUNT_SUCCESS'
@@ -44,8 +44,8 @@ export function fetchAccount(code, redirect = null) {
   return async (dispatch, getState) => {
     dispatch(fetchAccountStart())
     try {
-      let token = await fetchToken(code)
-      let login = await fetchLogin(token)
+      let token = await getToken(code)
+      let login = await getLogin(token)
       if (getState().account.authorizing) {
         dispatch(fetchAccountSuccess(token, login))
         dispatch(push(redirect))
