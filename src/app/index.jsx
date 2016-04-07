@@ -12,6 +12,7 @@ import mainReducer from './reducers/index.js'
 import App from './components/App.jsx'
 import Dashboard from './components/Dashboard.jsx'
 import Login from './components/Login.jsx'
+import EditPost from './components/EditPost.jsx'
 
 const appHistory = useRouterHistory(createHashHistory)({ queryKey: false })
 const logger = createLogger()
@@ -24,6 +25,9 @@ ReactDOM.render(
       <Route path="/" component={ App }>
         <IndexRoute component={ Dashboard } />
         <Route path="login" component={ Login } />
+        <Route path="posts">
+          <Route path="edit/:sha" component={ EditPost } />
+        </Route>
       </Route>
     </Router>
   </Provider>,

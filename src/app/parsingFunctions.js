@@ -17,3 +17,9 @@ export function parseFileFontMatter(content) {
   if(parted.length !== 3) throw new Error('parseFileFontMatter: no Font Matter the content')
   return YAML.safeLoad(parted[1].trim())
 }
+
+export function parseFileWithFontMatter(content) {
+  let parted = content.split('---', 3)
+  if(parted.length !== 3) return { content }
+  return Object.assign({}, YAML.safeLoad(parted[1].trim()), { content: parted[2].trim() })
+}
