@@ -2,10 +2,15 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { markdown } from 'markdown'
+import TinyMCE from 'react-tinymce'
 
 import * as FullPostActions from '../actions/fullPost.js'
 
 class EditPost extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
   componentDidMount() {
     this.props.fetchFullPost(this.props.params.sha)
   }
@@ -21,7 +26,7 @@ class EditPost extends React.Component {
           this.props.post ? (
             <div>
               <h1>{ this.props.post.title }</h1>
-              <div dangerouslySetInnerHTML={{ __html: markdown.toHTML(this.props.post.content) }}></div>
+              <TinyMCE config={{ height: 600 }} content={ markdown.toHTML(this.props.post.content) } />
             </div>
           )
 
